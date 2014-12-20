@@ -172,6 +172,29 @@ void PlayGame(char word[])
 	}
 }
 
+
+/*
+	Searches a string for a character and returns the index of that
+	characters' first appearance
+	
+	if a value of -1 is returned the character could not be found
+	in the string
+*/
+int FindCharIndex(char ch, char *string)
+{
+	int index = -1;
+	char *chIndex;
+	
+	chIndex = strchr(string, ch);
+	
+	if(chIndex != NULL)
+	{
+		index = (int)(chIndex - string);
+	}
+	
+	return(index);
+}
+
 /*
 	Searches a string or array of chars for a specific character and 
 	counts the number of occurences
