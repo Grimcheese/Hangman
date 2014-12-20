@@ -62,11 +62,16 @@ int main()
 	return 0;
 }
 
-void DisplayMenu()
+int DisplayMenu()
 {
+	int choice;
+
 	printf("1. Play Game\n");
-	printf("2. Options");
-	printf("0. Exit");
+	printf("2. Options\n");
+	printf("0. Exit\n");
+	
+	printf("Please type number: ");
+	scanf("%d", &choice);
 	
 	return;
 }
