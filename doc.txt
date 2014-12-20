@@ -1,0 +1,44 @@
+HANGMAN Design doc
+
+MAIN
+	GameStartup
+	
+	DO
+		DisplayMenu
+			configure game settings, etc...
+		DO
+			PickDifficulty
+			SelectWord
+			
+			GuessCharacters
+				display word as *'s 
+				loop until out of turns or whole word is guessed
+				
+				allow guessing a character or a whole word
+			
+				IF guess wrong character
+					add another part of noose
+				ELSE
+					reveal character on word`
+				
+			play again?
+				prompt user if they want to play again with the same
+				settings
+				
+		WHILE(want to play again)
+	WHILE(not exiting)
+END
+
+STARTUP STUFF
+
+PICK DIFFICULTY
+	prompt user
+	return difficulty; 1, 2 or 3 for easy, medium and hard
+	
+GUESSLETTER
+	get character from user
+	
+	IF(character has been picked)
+		pick another character
+	ELSE
+		return character
