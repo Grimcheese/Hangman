@@ -42,7 +42,7 @@ int main()
 				printf("Goodbye");
 				break;
 			case 1: // Begin playing the game
-				PlayGame(word);
+				PlayGame(word, turns);
 				break;
 			case 2: // Enter game config
 				DisplaySettings(difficulty, turns);
@@ -113,7 +113,7 @@ void Startup(int *turns, int *difficulty)
 		Compare letter to the word 
 		Loop until whole word is guessed or out of guesses
 */
-void PlayGame(char word[])
+void PlayGame(char word[], int turns)
 {
 	char cont;
 	char guessed_letters[24] = {'\0'};
@@ -145,21 +145,24 @@ void PlayGame(char word[])
 	}
 
 	currentturn = 1;
-	// While the words are not the same
-	while(strcmp(word, guessed_word) != 0)
+	// While the words are not the same or not out of turns
+	while((strcmp(word, guessed_word) != 0) || currentturn != turns)
 	{
 	
 		// Begin guessing. Letter returned has not been previously guessed
 		letter = GuessLetter(guessed_letters);
-		
 		
 		count = CharacterCount(letter, word, MAX_SIZE);
 		if(count > 0)
 		{
 			printf("%c appears %d times", letter, count);
 			
+			// For each occurence
 			for(i = 0; i < count; i++)
 			{
+				int index = FindCharIndex(letter, word);
+				guessed_word[index] = letter;
+				
 				
 			}
 		}
