@@ -62,6 +62,15 @@ int main()
 	return 0;
 }
 
+void DisplayMenu()
+{
+	printf("1. Play Game\n");
+	printf("2. Options");
+	printf("0. Exit");
+	
+	return;
+}
+
 void ChangeConfig(int *difficulty, int *turns)
 {
 	int choice;
@@ -145,10 +154,9 @@ void PlayGame(char word[], int turns)
 	}
 
 	currentturn = 1;
-	// While the word has not been guessed  or not out of turns
+	// While the word has not been guessed or not out of turns
 	while((strcmp(word, guessed_word) != 0) || currentturn != turns)
 	{
-	
 		// Begin guessing. Letter returned has not been previously guessed
 		letter = GuessLetter(guessed_letters);
 		
