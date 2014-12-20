@@ -140,17 +140,21 @@ void PlayGame(char word[], int turns, int difficulty)
 	FILE *fp;
 	
 	
-	DisplaySettings(difficulty, turns);
-	
-	printf("Are these settings ok?\n");
-	printf("Type y/n: ");
-	scanf("%c", &cont);
-	
-	
-	if(cont == 'n')
+	do
 	{
-		ChangeConfig(&difficulty, &turns);
-	}	
+		DisplaySettings(difficulty, turns);
+		
+		printf("Are these settings ok? (y/n): ");
+		cont = getchar();
+		getchar();
+		
+		
+		if(cont == 'n')
+		{
+			ChangeConfig(&difficulty, &turns);
+		}
+	}
+	while(cont == 'n');
 	
 	
 	fp = OpenList(difficulty, fp); 
@@ -200,7 +204,7 @@ void PlayGame(char word[], int turns, int difficulty)
 		else
 		{
 			//Insert code to update image
-			printf("Character not in word!");
+			printf("Character not in word!\n");
 		}
 		currentturn++;
 	}
@@ -294,7 +298,8 @@ char GuessLetter(char guessed_letters[])
 	do
 	{
 		printf("Please guess a letter: ");
-		scanf("%c", &letter);
+		letter = getchar();
+		getchar();
 
 		// TODO: implement input validity checking
 		
@@ -391,9 +396,9 @@ void PickWord(char word[], FILE *fp)
 	// Return fp to start of file
 	rewind(fp);
 	
-	printf("Number of lines in file: %d\n", lines);
+	printf("\n\nNumber of lines in file: %d\n", lines);
 	r = rand() % (lines + 1);
-	printf("Random number: %d", r);
+	printf("Random number: %d\n", r);
 	
 	
 	linecount = 1;
