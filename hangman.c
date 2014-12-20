@@ -17,20 +17,24 @@
 
 
 // Function prototypes
-void Startup(int*, int*);
+void Startup(int *turns, int *difficulty);
 int GetDifficulty(void);
 void PickWord(char[], FILE *);
 void debug(char[], int);
 FILE *OpenList(int, FILE *);
-void PlayGame(char word[]);
+void PlayGame(char word[], int turns, int difficulty);
 int DisplayMenu(void);
+void DisplaySettings(int difficulty, int turns);
+void ChangeConfig(int *difficulty, int *turns);
+char GuessLetter(char guessed_letter[]);
+int CharacterCount(char inChar, const char str[], const int length);
 
 int main()
 {
 	char word[MAX_SIZE];
-	int difficulty, turns;
+	int difficulty, turns, choice;
 
-	Startup(&turns, &difficulty);
+	Startup(&difficulty, &turns);
 	
 	do
 	{
@@ -42,16 +46,16 @@ int main()
 				printf("Goodbye");
 				break;
 			case 1: // Begin playing the game
-				PlayGame(word, turns);
+				PlayGame(word, turns, difficulty);
 				break;
 			case 2: // Enter game config
 				DisplaySettings(difficulty, turns);
-				ChangeConfig();
+				ChangeConfig(&difficulty, &turns);
 				break;
 			default: // Default error case
 				printf("problem. Default case reached from main menu.");
-				printf("%Chose: d", choice);
-				system.exit();
+				printf("%Chose: %d", choice);
+				exit(0);
 		}
 		
 		
@@ -73,7 +77,7 @@ int DisplayMenu()
 	printf("Please type number: ");
 	scanf("%d", &choice);
 	
-	return;
+	return(choice);
 }
 
 void ChangeConfig(int *difficulty, int *turns)
@@ -108,7 +112,7 @@ void ChangeConfig(int *difficulty, int *turns)
 		
 	More features can be placed here if needed
 */
-void Startup(int *turns, int *difficulty)
+void Startup(int *difficulty, int *turns)
 {
 	difficulty = 1;
 	turns = 10;
@@ -127,7 +131,7 @@ void Startup(int *turns, int *difficulty)
 		Compare letter to the word 
 		Loop until whole word is guessed or out of guesses
 */
-void PlayGame(char word[], int turns)
+void PlayGame(char word[], int turns, int difficulty)
 {
 	char cont;
 	char guessed_letters[24] = {'\0'};
@@ -163,13 +167,26 @@ void PlayGame(char word[], int turns)
 	while((strcmp(word, guessed_word) != 0) || currentturn != turns)
 	{
 		// Begin guessing. Letter returned has not been previously guessed
-		letter = GuessLetter(guessed_letters);
+		char letter = GuessLetter(guessed_letters);
 		
 		count = CharacterCount(letter, word, MAX_SIZE);
 		if(count > 0)
 		{
+		
+			for(i = 0; i < MAX_SIZE; i++)
+			{
+				if(word[i] == letter)
+				{
+					guessed_word[i] = letter;
+				}
+			}
+		
+			
 			printf("%c appears %d times", letter, count);
 			
+			
+			/*
+			char tempstring[MAX_SIZE] = {'\0'};
 			// For each occurence
 			for(i = 0; i < count; i++)
 			{
@@ -178,6 +195,7 @@ void PlayGame(char word[], int turns)
 				
 				
 			}
+			*/
 		}
 		else
 		{
