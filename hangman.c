@@ -186,7 +186,7 @@ void PlayGame(char word[], int turns, int difficulty)
 			}
 		
 			
-			printf("%c appears %d times", letter, count);
+			printf("%c", letter);
 			
 			
 			/*
@@ -301,6 +301,7 @@ char GuessLetter(char guessed_letters[])
 		letter = getchar();
 		getchar();
 
+		printf("%c", letter);
 		// TODO: implement input validity checking
 		
 		
@@ -314,6 +315,8 @@ char GuessLetter(char guessed_letters[])
 		}
 		
 	}while(valid == 1);
+	
+	printf("%c", letter);
 	
 	return(letter);
 }

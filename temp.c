@@ -1,31 +1,43 @@
 #include <stdio.h>
 #include <string.h>
 
+int GetInt(char *prompt)
+{
+	int num, digits = 0, length = 5;
+	char string[length];
+
+	printf("%s", prompt);
+	fgets(str, length, stdin);
+		
+	for(i = 0; i < length; i++)
+	{
+		if(isdigit(string[i])
+		{
+			digits++;
+		}
+	}	
+	
+	if(digits == length)
+	{
+		valid == 1;
+	}
+	else
+	{
+		valid == 0;
+	}
+	
+	printf("valid = %d", valid);
+	
+	return (num);
+	
+}
+
 int main()
 {
-	char string[10] = {'\0'};
-	char temp[10] = {'\0'};
+	int num = GetInt("please enter a number: ");
 	
-	int index, i;
-	strcpy(string, "helloblah");
+	printf("%d", num);
 	
-	index = 5;
-	for(i = index - 1; i < 10; i++)
-	{
-		temp[i - index - 1] = string[i];
-	}
-	
-	for(i = 0; i < 10; i++)
-	{
-		printf("%c", string[i]);
-	}
-	
-	printf("\n");
-	
-	for(i = 0; i < 10; i++)
-	{
-		printf("%c", temp[i]);
-	}
 	
 	return 0;
 }
