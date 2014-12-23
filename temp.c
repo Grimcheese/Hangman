@@ -1,32 +1,46 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+
+# define LENGTH 10
 
 int GetInt(char *prompt)
 {
-	int num, digits = 0, length = 5;
-	char string[length];
-
-	printf("%s", prompt);
-	fgets(str, length, stdin);
-		
-	for(i = 0; i < length; i++)
+	int i, num, valid, digit, length;
+	char string[10];
+	do
 	{
-		if(isdigit(string[i])
+		printf("%s", prompt);
+		fgets(string, 10, stdin);
+			
+		length = strlen(string);
+		for(i = 0; i < length; i++)
 		{
-			digits++;
+			if((isdigit(string[i]) != 0))
+			{
+				digit = 1;
+			}
+			else
+			{
+				digit = 0;
+				break;
+			}
+		}	
+		
+		if(digit == 1)
+		{
+			valid == 1;
+			printf("Valid\n");
+			
+			for(i = 0; i < length; i++);
 		}
-	}	
+		else
+		{
+			valid == 0;
+			printf("Not Valid\n");
+		}
+	}while(valid == 0);
 	
-	if(digits == length)
-	{
-		valid == 1;
-	}
-	else
-	{
-		valid == 0;
-	}
-	
-	printf("valid = %d", valid);
 	
 	return (num);
 	
