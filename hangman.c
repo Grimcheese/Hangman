@@ -61,7 +61,7 @@ int main()
 		}
 		
 		
-	}while(choice == 0);
+	}while(choice != 0);
 	
 	debug(word, difficulty); 
 	
@@ -72,6 +72,7 @@ int DisplayMenu()
 {
 	int choice;
 
+	printf("\n\nMain Menu \n");
 	printf("1. Play Game\n");
 	printf("2. Options\n");
 	printf("0. Exit\n");
@@ -86,6 +87,7 @@ void ChangeConfig(int *difficulty, int *turns)
 	int choice;
 
 	printf("What setting did you want to change?\n");
+	printf("0. Nothing\n");
 	printf("1. Difficulty\n");
 	printf("2. Number of turns\n");
 	
@@ -93,6 +95,8 @@ void ChangeConfig(int *difficulty, int *turns)
 	
 	switch(choice)
 	{
+		case 0:
+			break;
 		case 1: 
 			*difficulty = GetInt("New difficulty value: ");
 			break;
@@ -102,6 +106,8 @@ void ChangeConfig(int *difficulty, int *turns)
 		default:
 			printf("something went wrong. You made a wrong choice");
 	}
+	
+	return;
 }
 /*
 	Performs basic startup functions
@@ -112,6 +118,8 @@ void ChangeConfig(int *difficulty, int *turns)
 */
 void Startup(int *difficulty, int *turns)
 {
+	printf("\n\nWelcome to Hangman!!!!");
+
 	*difficulty = 1;
 	*turns = 10;
 	srand(time(NULL));
@@ -258,7 +266,7 @@ int CharacterCount(char inChar, const char str[], const int length)
 */
 void DisplaySettings(int difficulty, int turns)
 {
-	char difficulty_string[7];
+	char difficulty_string[7] = {'\0'};
 
 	if(difficulty == 1)
 	{
@@ -273,9 +281,9 @@ void DisplaySettings(int difficulty, int turns)
 		strncpy(difficulty_string, "hard", 4);
 	}
 	
-	printf("Current settings...\n");
-	printf("Difficulty is set to %s\n", difficulty_string);
-	printf("The amount of turns to guess the word is set to %d\n", turns);
+	printf("\n\nCurrent settings...\n");
+	printf("Difficulty is set to: %s\n", difficulty_string);
+	printf("The amount of turns to guess the word is set to: %d \n\n", turns);
 	
 	return;
 }
@@ -395,9 +403,9 @@ void PickWord(char word[], FILE *fp)
 	// Return fp to start of file
 	rewind(fp);
 	
-	printf("\n\nNumber of lines in file: %d\n", lines);
+	//printf("\n\nNumber of lines in file: %d\n", lines);
 	r = rand() % (lines + 1);
-	printf("Random number: %d\n", r);
+	//printf("Random number: %d\n", r);
 	
 	
 	linecount = 1;
