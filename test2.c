@@ -15,5 +15,7 @@ int main()
 		printf("is a digit");
 	}
 	
+	printf("%d", '1');
+	
 	return 0;
 }

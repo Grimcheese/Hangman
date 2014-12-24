@@ -12,9 +12,11 @@ int GetInt(char *prompt)
 	{
 		printf("%s", prompt);
 		fgets(string, 10, stdin);
+		
+		printf("The string you entered is: %s", string);
 			
 		length = strlen(string);
-		for(i = 0; i < length; i++)
+		for(i = 0; i < length - 1; i++)
 		{
 			if((isdigit(string[i]) != 0))
 			{
@@ -29,14 +31,22 @@ int GetInt(char *prompt)
 		
 		if(digit == 1)
 		{
-			valid == 1;
+			valid = 1;
 			printf("Valid\n");
 			
-			for(i = 0; i < length; i++);
+			
+			// Convert the string to an integer
+			num = 0;
+			for(i = 0; i < length - 1; i++)
+			{
+				num = num * 10;
+				num = (num + (int)string[i]) - 48;
+			}
+			
 		}
 		else
 		{
-			valid == 0;
+			valid = 0;
 			printf("Not Valid\n");
 		}
 	}while(valid == 0);

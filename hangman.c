@@ -13,6 +13,8 @@
 #include <time.h>
 #include <stdlib.h>
 
+#include "../libs/input.h"
+
 #define MAX_SIZE 11
 
 
@@ -74,8 +76,7 @@ int DisplayMenu()
 	printf("2. Options\n");
 	printf("0. Exit\n");
 	
-	printf("Please type number: ");
-	scanf("%d", &choice);
+	choice = GetInt("Please select an option: ");
 	
 	return(choice);
 }
@@ -88,18 +89,15 @@ void ChangeConfig(int *difficulty, int *turns)
 	printf("1. Difficulty\n");
 	printf("2. Number of turns\n");
 	
-	printf("Type number: ");
-	scanf("%d", &choice);
+	choice = GetInt("Type number: ");
 	
 	switch(choice)
 	{
 		case 1: 
-			printf("New difficulty value: ");
-			scanf("%d", &difficulty);
+			*difficulty = GetInt("New difficulty value: ");
 			break;
 		case 2: 
-			printf("New turns value: ");
-			scanf("%d", &turns);
+			*turns = ("New turns value: ");
 			break;
 		default:
 			printf("something went wrong. You made a wrong choice");
@@ -114,8 +112,8 @@ void ChangeConfig(int *difficulty, int *turns)
 */
 void Startup(int *difficulty, int *turns)
 {
-	difficulty = 1;
-	turns = 10;
+	*difficulty = 1;
+	*turns = 10;
 	srand(time(NULL));
 	
 	return;
@@ -276,7 +274,7 @@ void DisplaySettings(int difficulty, int turns)
 	}
 	
 	printf("Current settings...\n");
-	printf("Difficulty is set to %c\n", difficulty_string);
+	printf("Difficulty is set to %s\n", difficulty_string);
 	printf("The amount of turns to guess the word is set to %d\n", turns);
 	
 	return;
@@ -366,14 +364,12 @@ int GetDifficulty()
 {
 	int diff = 0;
 	
-	printf("Please select difficulty: ");
-	scanf("%d", &diff);
+	diff = GetInt("Please select difficulty: ");
 	
 	// Test to ensure diff is within correct range before passing to main
 	while(diff < 1 || diff > 3)
 	{
-		printf("Try again: ");
-		scanf("%d", &diff);
+		diff = GetInt("Try again: ");
 	}
 	
 	return (diff);
