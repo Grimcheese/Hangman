@@ -19,17 +19,17 @@
 
 
 // Function prototypes
-void Startup(int *turns, int *difficulty);
+void Startup(int*, int*);
 int GetDifficulty(void);
 void PickWord(char[], FILE *);
 void debug(char[], int);
 FILE *OpenList(int, FILE *);
-void PlayGame(char word[], int turns, int difficulty);
+void PlayGame(char[], int, int);
 int DisplayMenu(void);
-void DisplaySettings(int difficulty, int turns);
-void ChangeConfig(int *difficulty, int *turns);
-char GuessLetter(char guessed_letter[]);
-int CharacterCount(char inChar, const char str[], const int length);
+void DisplaySettings(int, int);
+void ChangeConfig(int*, int*);
+char GuessLetter(char[]);
+int CharacterCount(char, const char[], const int);
 
 int main()
 {
@@ -101,7 +101,7 @@ void ChangeConfig(int *difficulty, int *turns)
 			*difficulty = GetInt("New difficulty value: ");
 			break;
 		case 2: 
-			*turns = ("New turns value: ");
+			*turns = GetInt("New turns value: ");
 			break;
 		default:
 			printf("something went wrong. You made a wrong choice");
@@ -174,10 +174,15 @@ void PlayGame(char word[], int turns, int difficulty)
 
 	currentturn = 1;
 	// While the word has not been guessed or not out of turns
-	while((strcmp(word, guessed_word) != 0) || currentturn != turns)
+	while(strcmp(word, guessed_word) || currentturn <= turns)
 	{
+		char letter;
+	
+		printf("\Word guessed so far: %s\n", guessed_word);
+		printf("TEST: %s\n", guessed_letters);
+		
 		// Begin guessing. Letter returned has not been previously guessed
-		char letter = GuessLetter(guessed_letters);
+		letter = GuessLetter(guessed_letters);
 		
 		count = CharacterCount(letter, word, MAX_SIZE);
 		if(count > 0)
@@ -190,30 +195,20 @@ void PlayGame(char word[], int turns, int difficulty)
 					guessed_word[i] = letter;
 				}
 			}
-		
-			
-			printf("%c", letter);
-			
-			
-			/*
-			char tempstring[MAX_SIZE] = {'\0'};
-			// For each occurence
-			for(i = 0; i < count; i++)
-			{
-				int index = FindCharIndex(letter, word);
-				guessed_word[index] = letter;
-				
-				
-			}
-			*/
 		}
 		else
 		{
 			//Insert code to update image
-			printf("Character not in word!\n");
+			printf("Character not in word!\n\n");
 		}
+		
+		printf("\nCurrent turn: %d\n", currentturn);
+		printf("Turns to go: %d\n", turns - currentturn);
+		
+		printf("\n************************\n\n");
 		currentturn++;
 	}
+	printf("Game over\n");
 }
 
 
@@ -298,31 +293,37 @@ void DisplaySettings(int difficulty, int turns)
 char GuessLetter(char guessed_letters[])
 {
 	char letter;
-	int i;
-	int valid = 1; // Flag to show whether the character has been picked already
+	int i, length, valid; // Flag to show whether the character has been picked already
+	
+	length = strlen(guessed_letters);
+	printf("Letters guessed so far:  ");
+	for(i = 0; i < length; i++)
+	{
+		printf("%c, ", guessed_letters[i]);
+	}
 	
 	do
 	{
-		printf("Please guess a letter: ");
+		printf("\nPlease guess a letter: ");
 		letter = getchar();
 		getchar();
-
-		printf("%c", letter);
 		// TODO: implement input validity checking
 		
 		
 		if(CharacterCount(letter, guessed_letters, 24) > 0)
 		{
+			printf("Already guessed");
 			valid = 1;
 		}
 		else
 		{
 			valid = 0;
+			
+			guessed_letters[length] = letter;
 		}
 		
 	}while(valid == 1);
 	
-	printf("%c", letter);
 	
 	return(letter);
 }
@@ -370,7 +371,7 @@ FILE *OpenList(int difficulty, FILE *fp)
 // Difficulty should be 1, 2 or 3
 int GetDifficulty()
 {
-	int diff = 0;
+	int diff;
 	
 	diff = GetInt("Please select difficulty: ");
 	
