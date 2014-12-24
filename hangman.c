@@ -55,9 +55,8 @@ int main()
 				ChangeConfig(&difficulty, &turns);
 				break;
 			default: // Default error case
-				printf("problem. Default case reached from main menu.");
-				printf("%Chose: %d", choice);
-				exit(0);
+				printf("Problem. Default case reached from main menu.");
+				printf("Chose: %d. Is not a valid choice", choice);
 		}
 		
 		
@@ -77,7 +76,7 @@ int DisplayMenu()
 	printf("2. Options\n");
 	printf("0. Exit\n");
 	
-	choice = GetInt("Please select an option: ");
+	choice = GetInt("Please select an option: ", 1);
 	
 	return(choice);
 }
@@ -91,17 +90,17 @@ void ChangeConfig(int *difficulty, int *turns)
 	printf("1. Difficulty\n");
 	printf("2. Number of turns\n");
 	
-	choice = GetInt("Type number: ");
+	choice = GetInt("Type number: ", 1);
 	
 	switch(choice)
 	{
 		case 0:
 			break;
 		case 1: 
-			*difficulty = GetInt("New difficulty value: ");
+			*difficulty = GetInt("New difficulty value: ", 1);
 			break;
 		case 2: 
-			*turns = GetInt("New turns value: ");
+			*turns = GetInt("New turns value: ", 2);
 			break;
 		default:
 			printf("something went wrong. You made a wrong choice");
@@ -373,12 +372,12 @@ int GetDifficulty()
 {
 	int diff;
 	
-	diff = GetInt("Please select difficulty: ");
+	diff = GetInt("Please select difficulty: ", 1);
 	
 	// Test to ensure diff is within correct range before passing to main
 	while(diff < 1 || diff > 3)
 	{
-		diff = GetInt("Try again: ");
+		diff = GetInt("Try again: ", 1);
 	}
 	
 	return (diff);
