@@ -1,0 +1,6 @@
+# local ignore file #
+#####################
+
+*.exe
+*.obj
+*.tds
