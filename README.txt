@@ -1,3 +1,13 @@
+This project is being used not only to learn (relearn) parts of the C
+programming language but to learn all the different features of git 
+and version control. 
+
+WARNING. The code probably sucks :)
+
+
+********************************************
+
+
 This file contains the documentation for Hangman
 
 THIS GAME IS STILL A WORK IN PROGRESS
