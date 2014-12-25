@@ -216,7 +216,7 @@ void PlayGame(char word[], int turns, int difficulty)
 
 /*
 	Searches a string for a character and returns the index of that
-	characters' first appearance
+	characters' first appearance as an integer
 	
 	if a value of -1 is returned the character could not be found
 	in the string
