@@ -298,10 +298,16 @@ char GuessLetter(char guessed_letters[])
 	int i, length, valid; // Flag to show whether the character has been picked already
 	
 	length = strlen(guessed_letters);
-	printf("Letters guessed so far:  ");
-	for(i = 0; i < length; i++)
+	
+	
+	if(length > 0)
 	{
-		printf("%c, ", guessed_letters[i]);
+		printf("Letters guessed so far:  ");
+		for(i = 0; i < length - 1; i++)
+		{
+			printf("%c, ", guessed_letters[i]);
+		}
+		printf("%c", guessed_letters[length - 1]);
 	}
 	
 	do
