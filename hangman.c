@@ -138,7 +138,7 @@ void Startup(int *difficulty, int *turns)
 */
 void PlayGame(char word[], int turns, int difficulty)
 {
-	char cont;
+	char c;
 	char guessed_letters[24] = {'\0'};
 	char guessed_word[MAX_SIZE] = {'\0'};
 	int length, i, currentturn, count;
@@ -147,19 +147,21 @@ void PlayGame(char word[], int turns, int difficulty)
 	
 	do
 	{
+		int valid;
+		
 		DisplaySettings(difficulty, turns);
+		do
+		{
+			c = GetChar("Are these settings ok? (y/n): ");
+			valid = YNCharCheck(c);
+		}while(valid == 0);
 		
-		printf("Are these settings ok? (y/n): ");
-		cont = getchar();
-		getchar();
-		
-		
-		if(cont == 'n')
+		if(c == 'n')
 		{
 			ChangeConfig(&difficulty, &turns);
 		}
 	}
-	while(cont == 'n');
+	while(c == 'n');
 	
 	
 	fp = OpenList(difficulty, fp); 
@@ -178,7 +180,9 @@ void PlayGame(char word[], int turns, int difficulty)
 		char letter;
 	
 		printf("\Word guessed so far: %s\n", guessed_word);
-		printf("TEST: %s\n", guessed_letters);
+		printf("\nCurrent turn: %d\n", currentturn);
+		printf("Turns to go: %d\n", turns - currentturn);
+		//printf("TEST: %s\n", guessed_letters);
 		
 		// Begin guessing. Letter returned has not been previously guessed
 		letter = GuessLetter(guessed_letters);
@@ -201,8 +205,7 @@ void PlayGame(char word[], int turns, int difficulty)
 			printf("Character not in word!\n\n");
 		}
 		
-		printf("\nCurrent turn: %d\n", currentturn);
-		printf("Turns to go: %d\n", turns - currentturn);
+		
 		
 		printf("\n************************\n\n");
 		currentturn++;
