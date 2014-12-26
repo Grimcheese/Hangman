@@ -361,15 +361,15 @@ FILE *OpenList(int difficulty, FILE *fp)
 	// Assuming that difficulty is 1, 2 or 3
 	if(difficulty == 1)
 	{
-		fp = fopen("C:/progs/Hangman/words/easy.txt", "r");
+		fp = fopen("C:/progs/Hangman/data/easy.txt", "r");
 	}
 	else if(difficulty == 2)
 	{
-		fp = fopen("C:/progs/Hangman/words/medium.txt", "r");
+		fp = fopen("C:/progs/Hangman/data/medium.txt", "r");
 	}
 	else
 	{
-		fp = fopen("C:/progs/Hangman/words/hard.txt", "r");
+		fp = fopen("C:/progs/Hangman/data/hard.txt", "r");
 	}
 	
 	return fp;
