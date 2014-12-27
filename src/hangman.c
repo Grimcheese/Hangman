@@ -13,7 +13,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#include "../libs/input.h"
+#include "header/input.h"
 
 #define MAX_SIZE 11
 
@@ -179,7 +179,7 @@ void PlayGame(char word[], int turns, int difficulty)
 	{
 		char letter;
 	
-		printf("\Word guessed so far: %s\n", guessed_word);
+		printf("\nWord guessed so far: %s\n", guessed_word);
 		printf("\nCurrent turn: %d\n", currentturn);
 		printf("Turns to go: %d\n", turns - currentturn);
 		//printf("TEST: %s\n", guessed_letters);
