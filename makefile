@@ -5,29 +5,31 @@ FLAGS = -Wall
 ###################
 # File structure
 ###################
-SRCDIR = src/
-OBJDIR = obj/
+SRCDIR = src
+OBJDIR = obj
+BINDIR = bin
 
+# File variables
 
-# Variables that define the exe file
-
-TARGET = hangman
+TARGET = $(BINDIR)/hangman
 SOURCES = hangman.c input.c
 OBJECTS = $(SOURCES:.c=.o)
 
 # Directories 
+VPATH = src;bin;obj
+
 vpath %.c src/
 vpath %.o obj/
-vpath %.h src/headers
-vpath %.exe bin
+vpath %.h src/headers/
+vpath %.exe bin/
 
 all : $(TARGET)
 
-$(TARGET) : $(OBJECTS)
-	$(CC) $(FLAGS) -o $(TARGET) $(OBJECTS)
+$(TARGET) : $(addprefix $(OBJDIR)/, $(OBJECTS))
+	$(CC) $(FLAGS) -o $(TARGET) $^
 
 $(OBJDIR)/%.o: %.c
-	$(CC) -co $@ $<
+	$(CC) -c $< -o $@
 	
 # BASIC IDEA. Will not work with multiple source files
 #$(OBJECTS):
