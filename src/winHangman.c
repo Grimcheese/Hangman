@@ -74,14 +74,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	HDC hdc;
+	PAINTSTRUCT ps;
+
     switch(msg)
     {
         case WM_CLOSE:
             DestroyWindow(hwnd);
-        break;
+			break;
         case WM_DESTROY:
             PostQuitMessage(0);
-        break;
+			break;
+		case WM_PAINT:
+			
+			
+			hdc = BeginPaint(hwnd, &ps);
+			TextOut(hdc, 0, 0, "Hello, Windows!", 15);
+			EndPaint(hwnd, &ps);
+			return 0L;
         default:
             return DefWindowProc(hwnd, msg, wParam, lParam);
     }
