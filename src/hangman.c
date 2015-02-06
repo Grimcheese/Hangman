@@ -41,6 +41,7 @@ int main()
 	do
 	{
 		choice = DisplayMenu();
+		choice = GetInt("Please select an option: ", 1);
 		
 		switch(choice)
 		{
@@ -67,18 +68,14 @@ int main()
 	return 0;
 }
 
-int DisplayMenu()
+void DisplayMenu()
 {
-	int choice;
-
 	printf("\n\nMain Menu \n");
 	printf("1. Play Game\n");
 	printf("2. Options\n");
 	printf("0. Exit\n");
 	
-	choice = GetInt("Please select an option: ", 1);
-	
-	return(choice);
+	return;
 }
 
 void ChangeConfig(int *difficulty, int *turns)
@@ -90,7 +87,7 @@ void ChangeConfig(int *difficulty, int *turns)
 	printf("1. Difficulty\n");
 	printf("2. Number of turns\n");
 	
-	choice = GetInt("Type number: ", 1);
+	choice = GetInt("Please select an option: ", 1);
 	
 	switch(choice)
 	{
