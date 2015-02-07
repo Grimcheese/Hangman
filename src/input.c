@@ -4,80 +4,34 @@
 #include <stdio.h>
 #include <string.h>
 
-
-#define MAX_SIZE 20
 /*
 	Prompts the user for an integer value and returns that value.
 	
 	The value entered is input as a string and checked to see if it is
 	actually an integer. Only values that are integers are returned.
-	
-	n is the highest integer value that GetInt should return to the 
-	client.
-	client.
 */
-int GetInt(char *prompt, int n)
+int GetInt(char *prompt)
 {
-	int i, num, valid, digit, length;
-	char string[MAX_SIZE], ch;
+	int num, chRead, valid;
 	
-	printf("%s", prompt);
+	valid = 0;
 	do
 	{
+		printf("%s", prompt);
+		chRead = scanf("%d", &num);
 		
-		fgets(string, MAX_SIZE, stdin);
-		
-		
-		//while ((ch = getchar()) != '\n' && ch != EOF);
-		
-		// length - new line char
-		length = strlen(string) - 1;
-		
-		for(i = 0; i < length; i++)
+		if(chRead != 1)
 		{
-			if((isdigit(string[i]) != 0))
-			{
-				digit = 1;
-			}
-			else
-			{
-				digit = 0;
-				break;
-			}
-		}	
-		
-		if(digit == 0)
-		{
-			printf("Not a number. Try again: ");
-			valid = 0;
+			printf("Invalid");
 		}
-		else if((string[0] == '0' && length > 1) || string[0] == '\n')
-		{
-			printf("Incorrect input. Try again: ");
-			valid = 0;
-		}
-		else if(length > n)
-		{
-			printf("Number has too many digits. Number of digits must be %d or lower\nTry Again: ", n);
-			valid = 0;
-		}
-		else if(digit == 1)
+		else
 		{
 			valid = 1;
-			
-			// Convert the string to an integer
-			num = 0;
-			for(i = 0; i < length; i++)
-			{
-				num = num * 10;
-				num = (num + (int)string[i]) - 48;
-			}
 		}
 	}while(valid == 0);
 	
 	
-	return (num);
-	
+	return (num);	
 }
 
 /*
