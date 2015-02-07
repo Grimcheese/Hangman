@@ -1,6 +1,6 @@
 
 CC = gcc
-FLAGS = -Wall
+FLAGS = -Wall -g
 
 ###################
 # File structure
