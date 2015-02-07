@@ -7,7 +7,7 @@
 		returns an integer.
 		
 */
-int GetInt(char*, int);
+int GetInt(char*);
 char GetChar(char*);
 
 int YNCharCheck(char);

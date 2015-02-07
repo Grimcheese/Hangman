@@ -41,7 +41,7 @@ int main()
 	do
 	{
 		DisplayMenu();
-		choice = GetInt("Please select an option: ", 1);
+		choice = GetInt("Please select an option: ");
 		
 		switch(choice)
 		{
@@ -87,17 +87,17 @@ void ChangeConfig(int *difficulty, int *turns)
 	printf("1. Difficulty\n");
 	printf("2. Number of turns\n");
 	
-	choice = GetInt("Please select an option: ", 1);
+	choice = GetInt("Please select an option: ");
 	
 	switch(choice)
 	{
 		case 0:
 			break;
 		case 1: 
-			*difficulty = GetInt("New difficulty value: ", 1);
+			*difficulty = GetInt("New difficulty value: ");
 			break;
 		case 2: 
-			*turns = GetInt("New turns value: ", 2);
+			*turns = GetInt("New turns value: ");
 			break;
 		default:
 			printf("something went wrong. You made a wrong choice");
@@ -378,12 +378,12 @@ int GetDifficulty()
 {
 	int diff;
 	
-	diff = GetInt("Please select difficulty: ", 1);
+	diff = GetInt("Please select difficulty: ");
 	
 	// Test to ensure diff is within correct range before passing to main
 	while(diff < 1 || diff > 3)
 	{
-		diff = GetInt("Try again: ", 1);
+		diff = GetInt("Try again: ");
 	}
 	
 	return (diff);
