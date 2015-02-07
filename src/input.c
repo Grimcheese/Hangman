@@ -47,14 +47,14 @@ char GetChar(char *prompt)
 	do
 	{
 		// get a character and ignore the new line character
-		letter = getchar();
 		getchar();
+		letter = getchar();
 		
 		if(letter == '\n')
 		{
 			printf("Not a valid character: ");
 		}
-	}while(letter != '\n');
+	}while(letter == '\n');
 	
 	return(letter);
 }
