@@ -141,12 +141,11 @@ void PlayGame(char word[], int turns, int difficulty)
 	int length, i, currentturn, count;
 	FILE *fp;
 	
-	
+	/* YNCharCheck causes an error */
 	do
-	{
-		int valid;
-		
+	{	
 		DisplaySettings(difficulty, turns);
+		int valid = 0;
 		do
 		{
 			c = GetChar("Are these settings ok? (y/n): ");
