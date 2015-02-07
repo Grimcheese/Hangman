@@ -25,7 +25,7 @@ void PickWord(char[], FILE *);
 void debug(char[], int);
 FILE *OpenList(int, FILE *);
 void PlayGame(char[], int, int);
-int DisplayMenu(void);
+void DisplayMenu(void);
 void DisplaySettings(int, int);
 void ChangeConfig(int*, int*);
 char GuessLetter(char[]);
@@ -40,7 +40,7 @@ int main()
 	
 	do
 	{
-		choice = DisplayMenu();
+		DisplayMenu();
 		choice = GetInt("Please select an option: ", 1);
 		
 		switch(choice)

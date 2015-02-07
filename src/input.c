@@ -12,8 +12,9 @@
 	The value entered is input as a string and checked to see if it is
 	actually an integer. Only values that are integers are returned.
 	
-	n = the highest number of digits in the integer that is to be 
-	returned.
+	n is the highest integer value that GetInt should return to the 
+	client.
+	client.
 */
 int GetInt(char *prompt, int n)
 {
