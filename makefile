@@ -1,6 +1,6 @@
 
 CC = gcc
-FLAGS = -Wall -g
+FLAGS = -Wall -g -std=c99
 
 ###################
 # File structure
@@ -29,7 +29,7 @@ $(TARGET) : $(addprefix $(OBJDIR)/, $(OBJECTS))
 	$(CC) $(FLAGS) -o $(TARGET) $^
 
 $(OBJDIR)/%.o: %.c
-	$(CC) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 	
 # BASIC IDEA. Will not work with multiple source files
 #$(OBJECTS):

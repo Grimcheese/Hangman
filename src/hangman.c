@@ -22,20 +22,21 @@
 // Function prototypes
 void Startup(int*, int*);
 int GetDifficulty(void);
-void PickWord(char[], FILE *);
+char* PickWord(FILE *);
 void debug(char[], int);
-FILE *OpenList(int, FILE *);
-void PlayGame(char[], int, int);
+FILE *OpenList(int);
+void PlayGame(int, int);
 void DisplayMenu(void);
 void DisplaySettings(int, int);
 void ChangeConfig(int*, int*);
 char GuessLetter(char[]);
 int CharacterCount(char, const char[], const int);
 char* concat(char*, char*);
+char* HideWord(char*);
+void RemoveNewLine(char[]);
 
 int main()
 {
-	char word[MAX_SIZE];
 	int difficulty, turns, choice;
 
 	Startup(&difficulty, &turns);
@@ -51,7 +52,7 @@ int main()
 				printf("Goodbye");
 				break;
 			case 1: // Begin playing the game
-				PlayGame(word, turns, difficulty);
+				PlayGame(turns, difficulty);
 				break;
 			case 2: // Enter game config
 				DisplaySettings(difficulty, turns);
@@ -64,8 +65,6 @@ int main()
 		
 		
 	}while(choice != 0);
-	
-	debug(word, difficulty); 
 	
 	return 0;
 }
@@ -135,18 +134,16 @@ void Startup(int *difficulty, int *turns)
 		Compare letter to the word 
 		Loop until whole word is guessed or out of guesses
 */
-void PlayGame(char word[], int turns, int difficulty)
+void PlayGame(int turns, int difficulty)
 {
-	char c;
 	char guessed_letters[24] = {'\0'};
-	char guessed_word[MAX_SIZE] = {'\0'};
-	int length, i, currentturn, count;
-	FILE *fp;
 	
-	/* YNCharCheck causes an error */
+	// This do while loop should be in it's own function to make PlayGame() clearer
+	char c;
 	do
 	{	
 		DisplaySettings(difficulty, turns);
+	
 		int valid = 0;
 		do
 		{
@@ -161,23 +158,20 @@ void PlayGame(char word[], int turns, int difficulty)
 	}
 	while(c == 'n');
 	
-	
-	fp = OpenList(difficulty, fp); 
-	PickWord(word, fp);
-	
-	length = strlen(word);
-	for(i = 0; i < length; i++)
-	{
-		guessed_word[i] = '*';
-	}
+	// word and hiddenWord are allocated. NEED TO FREE THEM when finished
+	FILE* fp = OpenList(difficulty); 
+	char* word = PickWord(fp);
+	printf("%s\n", word);
+	char* hiddenWord = HideWord(word);
 
-	currentturn = 1;
+	int currentturn = 1;
 	// While the word has not been guessed or not out of turns
-	while(strcmp(word, guessed_word) || currentturn <= turns)
+	while(strcmp(word, hiddenWord) || currentturn <= turns)
 	{
+		int length = strlen(word);
 		char letter;
 	
-		printf("\nWord guessed so far: %s\n", guessed_word);
+		printf("\nWord guessed so far: %s\n", hiddenWord);
 		printf("\nCurrent turn: %d\n", currentturn);
 		printf("Turns to go: %d\n", turns - currentturn);
 		//printf("TEST: %s\n", guessed_letters);
@@ -185,15 +179,15 @@ void PlayGame(char word[], int turns, int difficulty)
 		// Begin guessing. Letter returned has not been previously guessed
 		letter = GuessLetter(guessed_letters);
 		
-		count = CharacterCount(letter, word, MAX_SIZE);
+		int count = CharacterCount(letter, word, length);
 		if(count > 0)
 		{
 		
-			for(i = 0; i < MAX_SIZE; i++)
+			for(int i = 0; i < length; i++)
 			{
 				if(word[i] == letter)
 				{
-					guessed_word[i] = letter;
+					hiddenWord[i] = letter;
 				}
 			}
 		}
@@ -209,6 +203,26 @@ void PlayGame(char word[], int turns, int difficulty)
 		currentturn++;
 	}
 	printf("Game over\n");
+	
+	return;
+}
+
+char* HideWord(char* word)
+{
+	int length = strlen(word) + 1;
+	char* hiddenWord = malloc(length);
+	for(int i = 0; i < length; i++)
+	{
+		if(i == length - 1)
+		{
+			hiddenWord[i] = "\0";
+		}
+		else
+		{
+			hiddenWord[i] = "*";
+		}
+	}
+	return(hiddenWord);
 }
 
 
@@ -354,8 +368,10 @@ void debug(char word[], int difficulty)
 	
 	It is assumed that the difficulty is 1, 2 or 3
 */
-FILE *OpenList(int difficulty, FILE *fp)
+FILE *OpenList(int difficulty)
 {
+	
+	FILE* fp;
 	char* cwd = _getcwd(NULL, 0);
 	// Assuming that difficulty is 1, 2 or 3
 	if(difficulty == 1)
@@ -410,18 +426,17 @@ int GetDifficulty()
 /*
 	Randomly picks a word from a list and stores it in the word array
 */
-void PickWord(char word[], FILE *fp)
+char* PickWord(FILE *fp)
 {
 	// variable declarations
-	int r, linecount, lines = 0;
+	int r, linecount, lines = 0, MAX_WORD_SIZE = 20;
+	char temp[MAX_WORD_SIZE];
+	
 	
 	// Count lines in file
-	while(!feof(fp))
+	while(fgets(temp, MAX_WORD_SIZE, fp))
 	{
-		if(fgetc(fp) == '\n')
-		{
-			lines++;
-		}
+		lines++;
 	} 
 	
 	// Return fp to start of file
@@ -431,31 +446,52 @@ void PickWord(char word[], FILE *fp)
 	r = rand() % (lines + 1);
 	//printf("Random number: %d\n", r);
 	
-	
 	linecount = 1;
 	if(fp != NULL)
 	{
-		while(fgets(word, MAX_SIZE, fp) != NULL)
+		for(int i = 0; i < MAX_WORD_SIZE; i++)
 		{
+			temp[i] = "\0";
+		}
+		
+		while(fgets(temp, MAX_WORD_SIZE, fp))
+		{
+			RemoveNewLine(temp);
+			printf("%s", temp);
 			if(linecount == r)
 			{
+				int length = strlen(temp);
+				char* word = malloc(length + 1);
+				strncpy(word, temp, length);
 				fclose(fp);
-				return;
+				printf("%s\n", word);
+				return(word);
 			}
 			linecount++;
 		}
 	}
 	else
 	{
-		printf("NULL");
+		printf("File Pointer is NULL");
 	}
 	
 	printf("Problem");
 	fclose(fp);
-	return;
+	return(NULL);
 } 
 
-
+void RemoveNewLine(char str[])
+{
+	int length = strlen(str);
+	for(int i = 0; i < length + 1; i++)
+	{
+		if(str[i] == "\n")
+		{
+			str[i] = "\0";
+		}
+	}
+	return;
+}
 
 
 
