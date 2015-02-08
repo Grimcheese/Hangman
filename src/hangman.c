@@ -12,6 +12,7 @@
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
+#include <direct.h>
 
 #include "header/input.h"
 
@@ -30,6 +31,7 @@ void DisplaySettings(int, int);
 void ChangeConfig(int*, int*);
 char GuessLetter(char[]);
 int CharacterCount(char, const char[], const int);
+char* concat(char*, char*);
 
 int main()
 {
@@ -354,23 +356,40 @@ void debug(char word[], int difficulty)
 */
 FILE *OpenList(int difficulty, FILE *fp)
 {
+	char* cwd = _getcwd(NULL, 0);
 	// Assuming that difficulty is 1, 2 or 3
 	if(difficulty == 1)
 	{
-		fp = fopen("C:/progs/Hangman/data/easy.txt", "r");
+		char* fileloc = concat(cwd, "/dat/easy.txt");
+		fp = fopen(fileloc, "r");
+		free(fileloc);
 	}
 	else if(difficulty == 2)
 	{
-		fp = fopen("C:/progs/Hangman/data/medium.txt", "r");
+		char* fileloc = concat(cwd, "/dat/medium.txt");
+		fp = fopen(fileloc, "r");
+		free(fileloc);
 	}
 	else
 	{
-		fp = fopen("C:/progs/Hangman/data/hard.txt", "r");
+		char* fileloc = concat(cwd, "/dat/hard.txt");
+		fp = fopen(fileloc, "r");
+		free(fileloc);
 	}
 	
+	free(cwd);
 	return fp;
 }
 
+char* concat(char* str1, char* str2)
+{
+	char* result = malloc(strlen(str1) + strlen(str2) + 1);
+	
+	strcpy(result, str1);
+	strcat(result, str2);
+	
+	return result;
+}
 // Gets the difficulty as an integer
 // Difficulty should be 1, 2 or 3
 int GetDifficulty()
