@@ -1,3 +1,7 @@
+*******************************************
+INCOMPLETE!!!!
+*******************************************
+
 This project is being used not only to learn (relearn) parts of the C programming language but to learn all the different features of git and version control. It is to be exclusively written in the C programming language and compiled using the GNU C Compiler in MinGW.
 
 WARNING. The code and documentation probably sucks :)
